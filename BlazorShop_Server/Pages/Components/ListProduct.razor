@@ -1,30 +1,22 @@
 @page "/Components/ListProduct"
 
 <h2 class="text-primary">List Product</h2>
+<p>Favourites Total: @SelectedFavouriteCount</p>
 <div class="border p-2 mt-2 bg-azure">
     <div class="row">
         @foreach (var product in Products)
         {
-            <div class="col-5 m-1 border bg-light">
-                <h4 class="text-secondary">Product - @product.Id</h4>
-                Name - @product.Name<br>
-                Show properties:
-                <input type="checkbox" @bind-value="@product.IsActive" checked='@(product.IsActive?"checked":null)'><br>
-
-                @if(product.IsActive) {
-                    @foreach (var prodProperties in product.ProductProperties)
-                    {
-                        <p>@prodProperties.Key - @prodProperties.Value</p>
-                    }
-                }
-                <_EditDeleteButton />
-            </div>
+            <_ProductItem Product="@product" OnFavoriteUpdated="FavouriteCountUpdate" />
         }
     </div>
 </div>
 
 @code {
+    // Variables.
     List<Product> Products = new();
+    private int SelectedFavouriteCount { get; set; } = 0;
+    
+    // Razor Events.
     protected override void OnInitialized()
     {
         Products.Add(new() {
@@ -49,9 +41,17 @@
                 new ProductProp { Id = 2, Key = "Size", Value = "18oz" },
                 new ProductProp { Id = 3, Key = "Color", Value = "White" }
             }
-        });
-        
+        });   
         base.OnInitialized();
+    }
+
+    // Methods.
+    protected void FavouriteCountUpdate(bool isSelected) {
+        if(isSelected) {
+            SelectedFavouriteCount++;
+        } else{
+            SelectedFavouriteCount--;
+        }
     }
 }
 

@@ -1,8 +1,12 @@
-<button class="btn btn-danger btn-100">Delete</button>
-<button class="btn btn-success btn-100">Edit</button>
+@if(IsActive) {
+    <button class="btn btn-danger btn-100">Delete</button>
+    <button class="btn btn-success btn-100">Edit</button>
+}
 
 @code {
-
+    // Input Parameters.
+    [Parameter]
+    public bool IsActive { get; set; }
 }
 
 <style>

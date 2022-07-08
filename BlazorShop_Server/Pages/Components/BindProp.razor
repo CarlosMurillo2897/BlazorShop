@@ -58,8 +58,9 @@
 </div>
 
 @code {
+    // Variables.
     private string selectedProp = "";
-
+    List<Product> Products = new();
     Product Product = new()
     {
         Id = 1,
@@ -73,8 +74,8 @@
             new ProductProp{ Id = 1, Key = "Size", Value = "20oz" }
         }
     };
-    List<Product> Products = new();
 
+    // Razor Events.
     protected override void OnInitialized()
     {
         Products.Add(new() {
