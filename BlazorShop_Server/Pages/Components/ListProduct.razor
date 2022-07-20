@@ -2,11 +2,15 @@
 
 <h2 class="text-primary">List Product</h2>
 <p>Favourites Total: @SelectedFavouriteCount</p>
+<p>Selected Product: @ProductSelected</p>
 <div class="border p-2 mt-2 bg-azure">
     <div class="row">
         @foreach (var product in Products)
         {
-            <_ProductItem Product="@product" OnFavoriteUpdated="FavouriteCountUpdate" />
+            <_ProductItem 
+                Product="@product" 
+                OnFavoriteUpdated="FavouriteCountUpdate" 
+                OnProductSelected="ProductSelectedUpdate" />
         }
     </div>
 </div>
@@ -15,6 +19,7 @@
     // Variables.
     List<Product> Products = new();
     private int SelectedFavouriteCount { get; set; } = 0;
+    private string ProductSelected { get; set; }
     
     // Razor Events.
     protected override void OnInitialized()
@@ -52,6 +57,9 @@
         } else{
             SelectedFavouriteCount--;
         }
+    }
+    protected void ProductSelectedUpdate(string ProductName) {
+        ProductSelected = ProductName;
     }
 }
 
