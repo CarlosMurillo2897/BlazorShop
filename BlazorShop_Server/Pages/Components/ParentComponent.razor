@@ -3,12 +3,13 @@
 <h3>Parent Child Relation</h3>
 
 <_ChildComponent OnButtonClick="ShowMessage" Title="Title from Parent Component.">
-    Render Fragment from Parent.
+    <ChildContent>Render Fragment from Parent.</ChildContent>
+    <DangerChildContent>Danger!!!!</DangerChildContent>
 </_ChildComponent>
 
 <p><b>@messageText</b></p>
 
-<_ChildComponent Title="Second Title." />
+@* <_ChildComponent Title="Second Title." /> *@
 
 @code {
     // Variables.

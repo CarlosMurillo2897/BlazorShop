@@ -1,11 +1,16 @@
 <div>
     <div class="alert alert-info">@Title</div>
     <div class="alert alert-success">
-        @if(ChildContent != null) {
-            <span>@ChildContent</span>
+        @if(DangerChildContent != null) {
+            <span>@DangerChildContent</span>
         }
-        else {   
-            <span>Empty Fragment.</span>
+        else {
+            @if(ChildContent != null) {
+                <span>@ChildContent</span>
+            }
+            else {   
+                <span>Empty Fragment.</span>
+            }
         }
     </div>
     <button class="btn btn-danger" @onclick="OnButtonClick">Button to be clicked</button>
@@ -16,6 +21,8 @@
     public string Title { get; set; }
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public RenderFragment DangerChildContent { get; set; }
     [Parameter]
     public EventCallback OnButtonClick { get; set; }
 }
