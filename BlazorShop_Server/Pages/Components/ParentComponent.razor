@@ -2,11 +2,13 @@
 
 <h3>Parent Child Relation</h3>
 
-<CascadingValue Value="@MessageForGrandChild2">
-    <_ChildComponent OnButtonClick="ShowMessage" Title="Title from Parent Component.">
-        <ChildContent>Render Fragment from Parent.</ChildContent>
-        <DangerChildContent>Danger!!!!</DangerChildContent>
-    </_ChildComponent>
+<CascadingValue Value="@MessageForGrandChild2" Name="Message">
+    <CascadingValue Value="@LuckyNumber" Name="LuckyNumber">
+        <_ChildComponent OnButtonClick="ShowMessage" Title="Title from Parent Component.">
+            <ChildContent>Render Fragment from Parent.</ChildContent>
+            <DangerChildContent>Danger!!!!</DangerChildContent>
+        </_ChildComponent>
+    </CascadingValue>
 </CascadingValue>
 
 <p><b>@messageText</b></p>
@@ -17,7 +19,7 @@
 @code {
     // Variables.
     public string MessageForGrandChild2 = "This message is from your Grand Parent (Parent Component).";
-    public int LuckyNumber = 7;
+    public string LuckyNumber = "7";
     public string messageText = "";
 
     // Methods.
