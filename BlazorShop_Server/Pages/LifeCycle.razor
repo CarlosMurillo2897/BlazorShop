@@ -7,7 +7,7 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 <div class="border">
-    <_LifeCycleChild></_LifeCycleChild>
+    <_LifeCycleChild CountValue="@currentCount"></_LifeCycleChild>
 </div>
 
 <hr />
@@ -32,5 +32,29 @@
     {
         EventType.Add("On OnInitializedAsync is called.");
         await Task.Delay(1000);
+    }
+    protected override void OnParametersSet()
+    {
+        EventType.Add("On OnParametersSet is called.");
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        EventType.Add("On OnParametersSetAsync is called.");
+        await Task.Delay(1000);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender) {
+            currentCount = 111;
+        }
+        else {
+            currentCount = 999;
+        }
+        EventType.Add("On OnAfterRender is called.");
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        EventType.Add("On OnAfterRenderAsync is called.");
     }
 }
