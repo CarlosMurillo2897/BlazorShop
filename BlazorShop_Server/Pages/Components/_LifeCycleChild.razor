@@ -1,0 +1,17 @@
+<h3>LifeCycle Child</h3>
+
+<hr />
+@foreach (var item in EventType)
+{
+    @item
+    <hr />
+}
+
+@code {
+    List<string> EventType = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        EventType.Add("On CHILD - Initialized is called.");
+    }
+}
