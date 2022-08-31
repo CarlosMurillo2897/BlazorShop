@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Web;
 using BlazorShop_Server.Data;
 using BlazorShop_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using BlazorShop_Business.Repository;
+using BlazorShop_Business.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
