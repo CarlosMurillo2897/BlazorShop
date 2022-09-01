@@ -1,7 +1,9 @@
 @page "/category"
 
 @inject ICategoryRepository _categoryRepository
+@inject IJSRuntime _jsRuntime
 
+<_DeleteConfirmation ConfirmationChanged="ConfirmDelete_Click" />
 <div class="row mt-4">
     <div class="col-6">
         <h4 class="card-title text-primary">Category List</h4>
@@ -24,7 +26,8 @@
                         <tr>
                             <td>@objCat.Name</td>
                             <td>
-                                <NavLink href="" class="btn btn-primary">Edit</NavLink>
+                                <NavLink href="@($"category/edit/{objCat.Id}")" class="btn btn-primary">Edit</NavLink>
+                                <button class="btn btn-danger" @onclick="() => HandleDelete(objCat.Id)">Delete</button>
                             </td>
                         </tr>
                     }
@@ -32,7 +35,7 @@
             </table>
         }
         else {
-            if(!IsLoading) {
+            if(IsLoading) {
                 // Loading gif.
                 <div class="text-center">
                     <img src="/images/loading.gif" alt="Loading..">
@@ -47,8 +50,9 @@
 </div>
 
 @code {
+    public bool IsLoading { get; set; } = true;
+    public int DeleteCategoryId { get; set; } = 0;
     private IEnumerable<CategoryDTO> Categories { get; set; } = new List<CategoryDTO>();
-    public bool IsLoading { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,4 +62,18 @@
         Categories = _categoryRepository.GetAll();
         IsLoading = false;
     }
+    private void HandleDelete(int Id) {
+        DeleteCategoryId = Id;
+        _jsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModal");
+    }
+
+    public async Task ConfirmDelete_Click(bool IsConfirmed) {
+        if(IsConfirmed && DeleteCategoryId != 0) {
+            // Delete.
+            _categoryRepository.Delete(DeleteCategoryId);
+            LoadCategories();
+            _jsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
+        }
+    }
+
 }
